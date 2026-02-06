@@ -1,0 +1,10 @@
+const TaskController = require("../controllers/admin/TaskController.js")
+const express = require("express");
+const router = express.Router();
+
+router.get("/dashboard", require("../controllers/admin/DashboardController.js"));
+router.get("/task", TaskController.index);
+
+router.get('/task/create' , TaskController.create);
+
+module.exports = router;

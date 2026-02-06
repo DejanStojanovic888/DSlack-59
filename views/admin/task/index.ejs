@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/admin/main.css">
+</head>
+<body>
+    <!-- namestili smo da nam ovde putanja ide od views foldera -->
+    <%- include('/admin/partials/navbar.ejs') %>  
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <%- include('/admin/partials/sidebar') %>
+            <div class="col-10 d-flex align-items-center mb-3">
+                <h1 style="display: none;">Dobrodosao <%= user.username %> 😎 na:</h1>
+                <h1 class="ms-4 fw-bold">All Tasks</h1>
+                <!-- ms-auto -->
+                <a href="/admin/task/create" class="btn btn-outline-primary ms-auto">New Task</a>
+            </div>
+            <hr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">To</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Public</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Created At</th>
+                        <th scope="col">Updated At</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% tasks.forEach(task => { %>
+                        <tr>
+                            <td><%= task.title %></td>
+                            <td><%= task.assignedTo.username %></td>
+                            <td><%= task.assignedBy.username %></td>
+                            <td><%= task.status %></td>
+                            <td><%= task.createdAt %></td>
+                            <td><%= task.updatedAt %></td>
+                            <td>
+                                <a href="/admin/task/<%= task._id %>/edit" class="btn btn-outline-primary">Edit</a>
+                                <a href="/admin/task/<%= task._id %>/delete" class="btn btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="/jquery.js"></script>
+    <script>
+        $("h1").slideDown(1000);
+    </script>
+</body>
+</html>

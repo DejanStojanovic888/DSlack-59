@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/admin/main.css">
+</head>
+<body>
+    <!-- namestili smo da nam ovde putanja ide od views foldera -->
+    <%- include('/admin/partials/navbar.ejs') %>  
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <%- include('/admin/partials/sidebar') %>
+            <div class="col-10">
+                <h1 style="display: none;">Dobrodosao <%= user.username %>! 😎 </h1>
+            </div>
+        </div>
+    </div>
+    <script src="/jquery.js"></script>
+    <script>
+        $("h1").slideDown(1000);
+    </script>
+</body>
+</html>
