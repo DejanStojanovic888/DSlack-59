@@ -3,10 +3,8 @@ const bcrypt = require("bcryptjs");
 
 const LoginController = async (req, res) => {
     const { email, password } = req.body;
-    console.log(req.body)
     try {
         const user = await User.findOne({ email: email }); // mora prvo da se proveri da li postoji user u bazi pa tek onda da se proveri da li je password ispravan
-        console.log(user);
         if(!user) {
             return res.redirect("/");
         }
@@ -16,6 +14,7 @@ const LoginController = async (req, res) => {
         }
         // Logovanje korisnika
         req.session.user = user;  // NAJBITNIJI DEO (trebalo bi da stavimo user.id u cookie ali za sada cemo ovako)
+        // console.log(req.session.user)
         console.log("Uspesno ste se logovali")
         res.redirect("/admin/dashboard");
 

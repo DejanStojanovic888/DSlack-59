@@ -4,11 +4,10 @@ const bcrypt = require("bcryptjs");  // isto radi kao SSH-key(pricacemo o njemu 
                                      // kasnije vracamo iz tog ludackog u ovaj normalni password
 const RegisterController = async (req, res) => {
     const { username, email, password } = req.body;
-    console.log(req.body);
     try {
             // pri registrovanju prvo moramo proveru da li imamo tog usera registrovanog u bazi:
         const testUser = await User.findOne({ email: email }); // .findOne() vraca object. Ali .find() vraca array.
-                                                            // Danilo je radio .find() pa posle if(testUser.length > 0)
+                                                               // Danilo je radio .find() pa posle if(testUser.length > 0)
         // console.log(testUser);  // ovde dobijamo null ako nema usera
         if(testUser) {
             return res.status(400).json({ message: "User already exists" }); // return je bitno. Jer prekida dalju egzekuciju funkcije

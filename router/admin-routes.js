@@ -7,4 +7,7 @@ router.get("/task", TaskController.index);
 
 router.get('/task/create' , TaskController.create);
 
+router.post("/task", TaskController.store);
+
+
 module.exports = router;
