@@ -38,7 +38,7 @@ const store = async (req, res) => {
 const destroy = async (req, res) => {
     try {
         let id = req.params.id;
-        // VAZNO: Ovo je guardian za .json() sa frontenda na backend(sada ne pomaze middleware isAuth.js):
+        // VAZNO: Ovo je guardian kada jeste korisnik regularno ulogovan ali NIJE VLASNIK TASKA(pa ne moze da ga obrise)
         let task = await Task.findById(id);
         if(!task.isOwner(req.session.user._id)) {
             return res.status(401).json({ message: 'You are not authorized to delete this task' });
