@@ -12,10 +12,10 @@ const LoginController = async (req, res) => {
         if(!bpass) {
             return res.redirect("/");
         }
-        // Logovanje korisnika
+        // Race conflict: U nekim scenarijima moze da se dogodi da prvo prikaze stranicu pa tek posle postavi cookie(resava sa callback functionom. Mogli smo req.session.callbackFunction(Ovo mi nije bas jasno. Kaze Danilo da pitamo ChatGPT) pa unutra da stavi to. Pa tek kad stavi to onda ide redirect())
+        // ovo prethodno se moze primetiti ovako: Prvo se logujemo. Pa dodjemo na neku stranicu i kliknemo na nesto  i ono nas samo izloguje...
         req.session.user = user;  // NAJBITNIJI DEO (trebalo bi da stavimo user.id u cookie ali za sada cemo ovako)
         // console.log(req.session.user)
-        console.log("Uspesno ste se logovali")
         res.redirect("/admin/dashboard");
 
     } catch (error) {

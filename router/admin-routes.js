@@ -9,5 +9,7 @@ router.get('/task/create' , TaskController.create);
 
 router.post("/task", TaskController.store);
 
+router.delete("/task/:id", TaskController.destroy);
+
 
 module.exports = router;

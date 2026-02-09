@@ -2,7 +2,6 @@ const User = require('../../models/User');
 const Task = require('../../models/Task');  
 
 const index = async (req, res) => {
-    console.log(req.session.user)
     // ne valja da nam daje sve taskove ovde ispod zato ide $or:
     const tasks = await Task.find({ // ovo je array of mongoose document objects(ako hocemo da dobijemo array of plain JS objects moramo da dodamo .lean() To je dobro za performanse. Mongoose-document-object ima svoje metode pa je veci od JS-objekta)
         $or: [                      // da ne bi povlacili celu bazu(baza filtrira umesto nas)
@@ -36,6 +35,24 @@ const store = async (req, res) => {
     res.redirect('/admin/task');
 }
 
+const destroy = async (req, res) => {
+    try {
+        let id = req.params.id;
+        // VAZNO: Ovo je guardian za .json() sa frontenda na backend(sada ne pomaze middleware isAuth.js):
+        let task = await Task.findById(id);
+        if(!task.isOwner(req.session.user._id)) {
+            return res.status(401).json({ message: 'You are not authorized to delete this task' });
+        }
+
+        let deleted = await Task.findByIdAndDelete(id);
+        res.status(200).json({ message: 'Task deleted successfully' });
+        // res.redirect('/admin/task');  Ovde NE TREBA REDIRECT(jer se respons preuzima na FRONTEND-u)
+    } catch (error) {
+        console.log(error); // ovo se vidi na bekendu
+        res.status(500).json({ message: 'Error deleting task' });
+    }   
+}
+
 module.exports = {
-    index, create, store
+    index, create, store, destroy
 }
